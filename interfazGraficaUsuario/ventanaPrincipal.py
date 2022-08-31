@@ -38,7 +38,7 @@ class VentanaPrincipal:
         file.add_command(label="Existencias SAP")
         file.add_command(label="Estatus shopping")
         file.add_command(label="Centros logísticos", command=importarArchivo)
-        menubar.add_cascade(label="Actualizar", menu=file)
+        menubar.add_cascade(label="Importar", menu=file)
 
         root.config(menu=menubar)
         root.mainloop()
