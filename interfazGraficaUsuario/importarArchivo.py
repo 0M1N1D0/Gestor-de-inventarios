@@ -1,6 +1,8 @@
 import tkinter as tk
+import ntpath # determina el nombre del archivo de la ruta especificada
 from tkinter import filedialog
 from tkinter import messagebox
+
 
 
 def importarArchivo():
@@ -17,13 +19,28 @@ def importarArchivo():
             labelRespuesta.config(fg="blue")
             labelRespuesta.config(text=respuesta)
             ruta = archivo
-            print("buscarArchivo ruta", ruta)
+            determinarNombreArchivo(ruta)
+            
+
+    # dependiendo del nombre del archivo, pasa la ruta al archivo
+    # db correspondiente para su ingreso
+    def determinarNombreArchivo(ruta):
+        print("ruta", ruta)
+        nombreArchivo = ntpath.basename(ruta)
+        print("nombreArchivo", nombreArchivo)
+        
+
+
+    # dependiendo del nombre del arhicvo
+    # def determinaDB():
+    #     print("determinaRutaDB ", archivo)
 
 
     # raiz
     ventana = tk.Tk() 
     #variable global que se mostrará en el label
     respuesta = "No"
+ 
     
 
 
@@ -54,8 +71,8 @@ def importarArchivo():
     botonCancelar = tk.Button(ventana, text="Cancelar", width="10", command=ventana.destroy)
     botonCancelar.grid(row=3, column=0, padx=15, pady=10, sticky="e")
 
-    botonAceptar = tk.Button(ventana, text="Guardar", width="10")
-    botonAceptar.grid(row=3, column=1, pady=10, sticky="w")
+    botonGuardar = tk.Button(ventana, text="Guardar", width="10", command=determinaDB)
+    botonGuardar.grid(row=3, column=1, pady=10, sticky="w")
 
 
     ventana.mainloop()
