@@ -18,7 +18,7 @@ class VentanaPrincipal:
 
         # obteniendo largo y ansho de pantalla
         anchoPantalla = root.winfo_screenwidth()
-        altoPantalla = root.winfo_screenheight()
+        # altoPantalla = root.winfo_screenheight()
 
         # encontrando el punto medio del ancho de la pantalla 
         centroEjeX = int(anchoPantalla / 2 - anchoVentana / 2)
@@ -40,7 +40,7 @@ class VentanaPrincipal:
         importar.add_command(label="Existencias SAP")
         importar.add_command(label="Estatus shopping")
         importar.add_command(label="Centros logísticos", command=importarArchivo)
-        menubar.add_cascade(label="Importar", menu=importar)
+        menubar.add_cascade(label="Actualizar", menu=importar)
 
         visualizacionAnalisis = tk.Menu(menubar, tearoff=0)
         visualizacionAnalisis.add_command(label="Existencias SAP")

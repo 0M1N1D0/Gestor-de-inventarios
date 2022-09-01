@@ -1,8 +1,8 @@
 import tkinter as tk
 import ntpath # determina el nombre del archivo de la ruta especificada
 from tkinter import filedialog
-from tkinter import messagebox
 
+from gestiondb.db_centrosLogisticos import guardarCentrosLogisticos
 
 
 def importarArchivo():
@@ -14,21 +14,29 @@ def importarArchivo():
         # si archivo tiene contenido, muestra el messagebox, cambia de color el label respuesta
         # y guarda la ruta en la variable ruta
         if archivo: 
-            messagebox.showinfo(title="Imprtar archivo", message="Archivo seleccionado correctamente.")
+            # messagebox.showinfo(title="Imprtar archivo", message="Archivo seleccionado correctamente.")
             respuesta = "Sí"
             labelRespuesta.config(fg="blue")
             labelRespuesta.config(text=respuesta)
-            ruta = archivo
-            determinarNombreArchivo(ruta)
+            nonlocal rutaArchivo
+            rutaArchivo = archivo
+            determinarNombreArchivo(rutaArchivo)
             
 
     # dependiendo del nombre del archivo, pasa la ruta al archivo
     # db correspondiente para su ingreso
     def determinarNombreArchivo(ruta):
-        print("ruta", ruta)
+        #print("ruta", ruta)
+        nonlocal nombreArchivo
         nombreArchivo = ntpath.basename(ruta)
-        print("nombreArchivo", nombreArchivo)
-        
+        #print("nombreArchivo", nombreArchivo)
+
+
+    def guardarEnDB():
+        if nombreArchivo == "centrosLogisticos.xlsx":
+            guardarCentrosLogisticos(rutaArchivo)
+            ventana.destroy()
+            
 
 
     # dependiendo del nombre del arhicvo
@@ -40,6 +48,8 @@ def importarArchivo():
     ventana = tk.Tk() 
     #variable global que se mostrará en el label
     respuesta = "No"
+    rutaArchivo: str
+    nombreArchivo: str
  
     
 
@@ -71,7 +81,7 @@ def importarArchivo():
     botonCancelar = tk.Button(ventana, text="Cancelar", width="10", command=ventana.destroy)
     botonCancelar.grid(row=3, column=0, padx=15, pady=10, sticky="e")
 
-    botonGuardar = tk.Button(ventana, text="Guardar", width="10", command=determinaDB)
+    botonGuardar = tk.Button(ventana, text="Guardar", width="10", command=guardarEnDB)
     botonGuardar.grid(row=3, column=1, pady=10, sticky="w")
 
 
