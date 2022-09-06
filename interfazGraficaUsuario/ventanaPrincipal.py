@@ -1,7 +1,7 @@
 # paquetes python
 import tkinter as tk
 #importaciones propias
-from .importarArchivo import importarArchivo
+from .ventanaImportarArchivo import importarArchivo
 from .ventanaCentrosLogisticos import ventanaCentrosLogisticos
 from .ventanaInventariogeneral import ventanaInventarioGeneral
 from.ventanaExistencias import ventanaExistencias
