@@ -3,6 +3,8 @@ import ntpath # determina el nombre del archivo de la ruta especificada
 from tkinter import filedialog
 
 from gestiondb.db_centrosLogisticos import guardarCentrosLogisticos
+from gestiondb.db_inventarioGeneral import guardaInventarioGeneral
+from gestiondb.db_existencias import guardaExistencias
 
 
 def importarArchivo():
@@ -36,7 +38,12 @@ def importarArchivo():
         if nombreArchivo == "centrosLogisticos.xlsx":
             guardarCentrosLogisticos(rutaArchivo)
             ventana.destroy()
-            
+        elif nombreArchivo == "inventarioGeneral.xlsx":
+            guardaInventarioGeneral(rutaArchivo)
+            ventana.destroy()
+        elif nombreArchivo == "existencias.xlsx":
+            guardaExistencias(rutaArchivo)
+            ventana.destroy()
 
 
     # dependiendo del nombre del arhicvo
@@ -57,10 +64,22 @@ def importarArchivo():
 
     # ************* Configuración de ventana ***************
     ventana.title("Importar")
-    ventana.geometry("240x125")
+    ventana.geometry("245x135")
     ventana.iconbitmap("interfazGraficaUsuario\icono2.ico")
     ventana.resizable(False, False)
     ventana.focus_force()
+
+    # *********** menu bar **********************
+    menubar = tk.Menu(ventana)
+
+    archivo = tk.Menu(menubar, tearoff=0)
+    archivo.add_command(label="Cerrar", command=ventana.destroy)
+    menubar.add_cascade(label="Archivo", menu=archivo)
+
+    ayuda = tk.Menu(menubar, tearoff=0)
+    ayuda.add_command(label="Manual de usuario")
+    menubar.add_cascade(label="Ayuda", menu=ayuda)
+    # ********************************************
 
     # labelSeleccionaArchivo = tk.Label(ventana, text="Selecciona el arhivo:")
     # labelSeleccionaArchivo.grid(row=0, column=0, padx=5, pady=5, sticky="w")
@@ -84,5 +103,5 @@ def importarArchivo():
     botonGuardar = tk.Button(ventana, text="Guardar", width="10", command=guardarEnDB)
     botonGuardar.grid(row=3, column=1, pady=10, sticky="w")
 
-
+    ventana.config(menu=menubar)
     ventana.mainloop()

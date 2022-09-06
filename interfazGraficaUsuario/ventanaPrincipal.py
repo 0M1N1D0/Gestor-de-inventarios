@@ -3,6 +3,8 @@ import tkinter as tk
 #importaciones propias
 from .importarArchivo import importarArchivo
 from .ventanaCentrosLogisticos import ventanaCentrosLogisticos
+from .ventanaInventariogeneral import ventanaInventarioGeneral
+from.ventanaExistencias import ventanaExistencias
 
 class VentanaPrincipal:
 
@@ -37,15 +39,17 @@ class VentanaPrincipal:
         menubar = tk.Menu(root)
 
         importar = tk.Menu(menubar, tearoff=0) # tearoff=0 elimina linea superior
-        importar.add_command(label="Existencias SAP")
+        importar.add_command(label="Existencias SAP", command=importarArchivo)
         importar.add_command(label="Estatus shopping")
         importar.add_command(label="Centros logísticos", command=importarArchivo)
+        importar.add_command(label="Inventario general", command=importarArchivo)
         menubar.add_cascade(label="Actualizar", menu=importar)
 
         visualizacionAnalisis = tk.Menu(menubar, tearoff=0)
-        visualizacionAnalisis.add_command(label="Existencias SAP")
+        visualizacionAnalisis.add_command(label="Existencias SAP", command=ventanaExistencias)
         visualizacionAnalisis.add_command(label="Estatus shopping")
         visualizacionAnalisis.add_command(label="Centros logísticos", command=ventanaCentrosLogisticos)
+        visualizacionAnalisis.add_command(label="Inventario general", command=ventanaInventarioGeneral)
         menubar.add_cascade(label="Visualización y análisis", menu=visualizacionAnalisis)
 
         root.config(menu=menubar)
