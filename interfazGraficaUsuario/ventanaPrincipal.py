@@ -50,7 +50,7 @@ class VentanaPrincipal:
         visualizacionAnalisis.add_command(label="Estatus shopping")
         visualizacionAnalisis.add_command(label="Centros logísticos", command=ventanaCentrosLogisticos)
         visualizacionAnalisis.add_command(label="Inventario general", command=ventanaInventarioGeneral)
-        menubar.add_cascade(label="Visualización y análisis", menu=visualizacionAnalisis)
+        menubar.add_cascade(label="Consultas", menu=visualizacionAnalisis)
 
         root.config(menu=menubar)
         root.mainloop()

@@ -46,6 +46,8 @@ def ventanaInventarioGeneral():
         # print(df)
     except:
         messagebox.showerror(title="Error", message="Ocurrió un error al cargar la base de datos.")
+
+    conexion.close()
     # **********************************************************************
 
 
@@ -55,6 +57,18 @@ def ventanaInventarioGeneral():
     ventana.resizable(False, False)
     ventana.iconbitmap("interfazGraficaUsuario\icono2.ico")
     ventana.configure(padx=15, pady=15)
+
+    # *********** menu bar **********************
+    menubar = tk.Menu(ventana)
+
+    archivo = tk.Menu(menubar, tearoff=0)
+    archivo.add_command(label="Cerrar", command=ventana.destroy)
+    menubar.add_cascade(label="Archivo", menu=archivo)
+
+    ayuda = tk.Menu(menubar, tearoff=0)
+    ayuda.add_command(label="Manual de usuario")
+    menubar.add_cascade(label="Ayuda", menu=ayuda)
+    # ********************************************
 
     # ****************** creacion widgets *****************************
     labelBuscar = tk.Label(ventana, text="Buscar")
@@ -74,6 +88,8 @@ def ventanaInventarioGeneral():
     textoBuscar.bind("<Tab>", focus_next_widget)
     botonGenerar.bind("<Return>", presionado)
 
+
+    ventana.config(menu=menubar)
     ventana.mainloop()
 
   
