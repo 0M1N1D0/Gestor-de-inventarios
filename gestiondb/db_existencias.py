@@ -14,11 +14,13 @@ def guardaExistencias(ruta):
     conexion = sqlite3.connect("gestorInventariosdb.db")
 
     try:
-        # el df de pandas se pasa a sqlite 
-        df.to_sql(name="existencias", con=conexion, if_exists='replace', index=False)
-        messagebox.showinfo(title="Importar archivo", message="Archivo seleccionado actualizado correctamente en base de datos.")
+        # el df de pandas se pasa a sqlite
+        df.to_sql(name="existencias", con=conexion,
+                  if_exists='replace', index=False)
+        messagebox.showinfo(title="Importar archivo",
+                            message="Archivo seleccionado actualizado correctamente en base de datos.")
     except:
-        messagebox.showerror(title="Error de importación", message="Ocurrió un error al importar el archivo seleccionado a la base de datos.")
-
+        messagebox.showerror(title="Error de importación",
+                             message="Ocurrió un error al importar el archivo seleccionado a la base de datos.")
 
     conexion.close()

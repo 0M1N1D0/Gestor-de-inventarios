@@ -1,7 +1,6 @@
 import tkinter as tk
-import ntpath # determina el nombre del archivo de la ruta especificada
+import ntpath  # determina el nombre del archivo de la ruta especificada
 from tkinter import filedialog
-from turtle import width
 
 from gestiondb.db_centrosLogisticos import guardarCentrosLogisticos
 from gestiondb.db_inventarioGeneral import guardaInventarioGeneral
@@ -9,14 +8,19 @@ from gestiondb.db_existencias import guardaExistencias
 
 
 def importarArchivo():
-
+    
+    # ************************************************************************
+    # FUNCIONES
+    # ************************************************************************
+    
     # funcion que abre ventana para seleccionar archivo a importar
     def buscarArchivo():
-        archivo= filedialog.askopenfilename(title="Seleciona archivo", initialdir="/")
-        
+        archivo = filedialog.askopenfilename(
+            title="Seleciona archivo", initialdir="/")
+
         # si archivo tiene contenido, muestra el messagebox, cambia de color el label respuesta
         # y guarda la ruta en la variable ruta
-        if archivo: 
+        if archivo:
             # messagebox.showinfo(title="Imprtar archivo", message="Archivo seleccionado correctamente.")
             respuesta = "Sí"
             labelRespuesta.config(fg="blue")
@@ -24,22 +28,21 @@ def importarArchivo():
             nonlocal rutaArchivo
             rutaArchivo = archivo
             determinarNombreArchivo(rutaArchivo)
-            
 
     # dependiendo del nombre del archivo, pasa la ruta al archivo
     # db correspondiente para su ingreso
+
     def determinarNombreArchivo(ruta):
         #print("ruta", ruta)
         nonlocal nombreArchivo
         nombreArchivo = ntpath.basename(ruta)
         #print("nombreArchivo", nombreArchivo)
 
-
     def guardarEnDB():
         if nombreArchivo == "centrosLogisticos.xlsx":
             guardarCentrosLogisticos(rutaArchivo)
             ventana.destroy()
-        elif nombreArchivo == "inventarioGeneral.xlsx":
+        elif nombreArchivo.startswith("inventarioGeneral"):
             guardaInventarioGeneral(rutaArchivo)
             ventana.destroy()
         elif nombreArchivo == "existencias.xlsx":
@@ -47,21 +50,14 @@ def importarArchivo():
             ventana.destroy()
 
 
-    # dependiendo del nombre del arhicvo
-    # def determinaDB():
-    #     print("determinaRutaDB ", archivo)
-
-
-    # raiz
-    ventana = tk.Tk() 
-    #variable global que se mostrará en el label
+    # ************************************************************************
+    # CREACION DE ROOT
+    # ************************************************************************
+    ventana = tk.Tk()
+    # variable global que se mostrará en el label
     respuesta = "No"
     rutaArchivo: str
     nombreArchivo: str
- 
-
-
-    # ************* Configuración de ventana ***************
     ventana.title("Importar")
     # ventana.geometry("260x135")
     ventana.iconbitmap("interfazGraficaUsuario\icono2.ico")
@@ -69,9 +65,11 @@ def importarArchivo():
     ventana.focus_force()
 
     labelFrame = tk.LabelFrame(ventana)
-    labelFrame.grid(padx=[15,15], pady=[10,0], columnspan=2)
+    labelFrame.grid(padx=[15, 15], pady=[10, 0], columnspan=2)
 
-    # *********** menu bar **********************
+    # ************************************************************************
+    # MENU BAR
+    # ************************************************************************
     menubar = tk.Menu(ventana)
 
     archivo = tk.Menu(menubar, tearoff=0)
@@ -81,29 +79,37 @@ def importarArchivo():
     ayuda = tk.Menu(menubar, tearoff=0)
     ayuda.add_command(label="Manual de usuario")
     menubar.add_cascade(label="Ayuda", menu=ayuda)
-    # ********************************************
-
-    # labelSeleccionaArchivo = tk.Label(ventana, text="Selecciona el arhivo:")
-    # labelSeleccionaArchivo.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-
-    labelSeleccion = tk.Label(labelFrame, text="Archivo a importar:")  
-    labelSeleccion.grid(row=0, column=0, padx=15, sticky="e")
-
-    botonBuscar = tk.Button(labelFrame, text="Buscar", width="10", command=buscarArchivo)
-    botonBuscar.grid(row=0, column=1, padx=[0,10], pady=10)
-
+    
+    # ************************************************************************
+    # CREACION DE WIDGETS
+    # ************************************************************************
+    labelSeleccion = tk.Label(labelFrame, text="Archivo a importar:")
+    botonBuscar = tk.Button(labelFrame, text="Buscar",
+                            width="10", command=buscarArchivo)
     labelMostrarRuta = tk.Label(labelFrame, text="Archivo seleccionado:")
-    labelMostrarRuta.grid(row=1, column=0, padx=15, pady=[0,10], sticky="e")
-
     labelRespuesta = tk.Label(labelFrame, text=respuesta)
-    labelRespuesta.grid(row=1, column=1, sticky="w", pady=[0,10])
-    labelRespuesta.config(fg="red")
-
-    botonCancelar = tk.Button(ventana, text="Cancelar", width="10", command=ventana.destroy)
+    botonCancelar = tk.Button(ventana, text="Cancelar",
+                              width="10", command=ventana.destroy)
+    botonGuardar = tk.Button(ventana, text="Guardar",
+                             width="10", command=guardarEnDB)
+    
+    # ************************************************************************
+    # POSICIONAMIENTO DE WIDGETS
+    # ************************************************************************
+    labelSeleccion.grid(row=0, column=0, padx=15, sticky="e")
+    botonBuscar.grid(row=0, column=1, padx=[0, 10], pady=10)
+    labelMostrarRuta.grid(row=1, column=0, padx=15, pady=[0, 10], sticky="e")
+    labelRespuesta.grid(row=1, column=1, sticky="w", pady=[0, 10])
     botonCancelar.grid(row=3, column=0, padx=15, pady=[10, 15], sticky="e")
-
-    botonGuardar = tk.Button(ventana, text="Guardar", width="10", command=guardarEnDB)
     botonGuardar.grid(row=3, column=1, pady=[10, 15], sticky="w")
-
+    
+    # ************************************************************************
+    # CONFIGURACIONES DE WIDGETS
+    # ************************************************************************
+    labelRespuesta.config(fg="red")
+    
+    # ************************************************************************
+    # FIN DE ROOT
+    # ************************************************************************
     ventana.config(menu=menubar)
     ventana.mainloop()

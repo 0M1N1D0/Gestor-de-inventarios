@@ -1,53 +1,64 @@
+
 import tkinter as tk
 import sqlite3
 from tkinter import Button, messagebox
+from tkinter.ttk import Combobox
 import pandas as pd
-from pandastable import Table 
+from pandastable import Table
 
 
 def ventanaCentrosLogisticos():
 
+    # ************************************************************************
+    # CONEXION A DB Y CREACION DE DATAFRAME
+    # ************************************************************************
+    conexion = sqlite3.connect("gestorInventariosdb.db")
+    # creación de df
+    try:
+        df = pd.read_sql_query("SELECT * FROM centrosLogisticos", con=conexion)
+        # print(df)
+    except:
+        messagebox.showerror(
+            title="Error", message="Ocurrió un error al cargar la base de datos.")
+
+    # TODO: en el manual de ayuda aclarar que la columna código postal, los valores
+    # en blanco se tienen que llenar con 0 en el excel, antes de hacer la actualización,
+    # sino aparecerán con decimal, ejemplo: 44770.00
+
+    # ************************************************************************
+    # FUNCIONES
+    # ************************************************************************
     def generarTabla(df):
         tabla = tk.Toplevel()
         tabla.iconbitmap("interfazGraficaUsuario\icono2.ico")
         tabla.title("Visualización de Centros Logísticos")
-        pt = Table(tabla, dataframe=df, enable_menus=True, showstatusbar=True, editable=True)
+        pt = Table(tabla, dataframe=df, enable_menus=True,
+                   showstatusbar=True, editable=True)
         pt.show()
         pt.focus_force()
 
-
     def configurarDF():
-
-        estado = textoEstado.get(1.0, "end-1c") # parametros requeridos para guardar el texto
-        ciudad = textoCiudad.get(1.0, 'end-1c')
-        estado = estado.capitalize()
-        ciudad = ciudad.capitalize()
-
-        if not estado and not ciudad:
-            generarTabla(df)
-        elif estado and ciudad:
-            df_filtrado = df[(df['Estado'].str.contains(estado)) & (df['Nombre'].str.contains(ciudad))]
-            generarTabla(df_filtrado)
-        elif estado:
-            df_filtrado = df[df['Estado'].str.contains(estado)]
+        pais = paises_cb.get()
+        if pais and pais != "Todos":
+            df_filtrado = df[df['País'] == pais]
             generarTabla(df_filtrado)
         else:
-            df_filtrado = df[df['Nombre'].str.contains(ciudad)]
-            generarTabla(df_filtrado)
-
+            generarTabla(df)
 
     def focus_next_widget(event):
         event.widget.tk_focusNext().focus()
         return("break")
 
-
     def presionado(event):
         configurarDF()
 
 
+    # ************************************************************************
+    # CREACION DE VENTANA
+    # ************************************************************************
     ventana = tk.Tk()
-    ventana.title("Centros logisticos")
-    # ventana.geometry("275x115")
+    ventana.title("Centros SAP")
+    # ventana.geometry("300x150")
     ventana.iconbitmap("interfazGraficaUsuario\icono2.ico")
     ventana.focus_force()
     ventana.resizable(False, False)
@@ -56,7 +67,9 @@ def ventanaCentrosLogisticos():
     # frame = tk.Frame(ventana)
     # frame.pack(fill='both', expand=True, pady=15)
 
-    # *********** menu bar **********************
+    # ************************************************************************
+    # MENU BAR
+    # ************************************************************************
     menubar = tk.Menu(ventana)
 
     archivo = tk.Menu(menubar, tearoff=0)
@@ -66,44 +79,63 @@ def ventanaCentrosLogisticos():
     ayuda = tk.Menu(menubar, tearoff=0)
     ayuda.add_command(label="Manual de usuario")
     menubar.add_cascade(label="Ayuda", menu=ayuda)
-    # ********************************************
 
-    # *************** conexión a DB y obtención del DF **********************
-    # conexicon a DB
-    conexion = sqlite3.connect("gestorInventariosdb.db")
-    # creación de df
-    try:
-        df = pd.read_sql_query("SELECT * FROM centrosLogisticos", con=conexion)
-        # print(df)
-    except:
-        messagebox.showerror(title="Error", message="Ocurrió un error al cargar la base de datos.")
-    # **********************************************************************
-    
-    # ************** widgets ******************************************
-    labelEstado = tk.Label(ventana, text="Estado:")
-    textoEstado = tk.Text(ventana, height=1, width=25)
-    labelCiudad = tk.Label(ventana,text="Ciudad:")
-    textoCiudad = tk.Text(ventana, height=1, width=25)
-    botonGenerarTabla = Button(ventana, text="Generar", command=configurarDF, width=10)
 
-    # ******************* posicion widgets **************************
-    labelEstado.grid(row=0, column=0, padx=10)
-    textoEstado.grid(row=0, column=1, padx=15)
-    labelCiudad.grid(row=1, column=0, padx=10, pady=[10,0])
-    textoCiudad.grid(row=1, column=1, padx=15, pady=[10,0])
-    botonGenerarTabla.grid(row=2, columnspan=2, pady=[15,0], ipadx=5, ipady=5)
+    # ************************************************************************
+    # CREACION DE WIDGETS
+    # ************************************************************************
+    label_pais = tk.Label(ventana, text="País")
 
-    
-    # *************** comportamientos **************************************
-    textoEstado.focus_force() 
-    textoEstado.bind("<Tab>", focus_next_widget)
-    textoCiudad.bind("<Tab>", focus_next_widget)
+    # creción de combobox
+    paises_cb = Combobox(ventana)
+
+    paises_cb['values'] = (
+        'Todos',
+        'Argentina',
+        'Bolivia',
+        'Brasil',
+        'Chile',
+        'Colombia',
+        'Costa Rica',
+        'Dominicana',
+        'Ecuador',
+        'El Salvador',
+        'España',
+        'Guatemala',
+        'Honduras',
+        'Italia',
+        'México',
+        'Nicaragua',
+        'Nigeria',
+        'Panamá',
+        'Paraguay',
+        'Perú',
+        'Rusia',
+        'Uruguay',
+        'USA'
+    )
+
+    botonGenerarTabla = Button(
+        ventana, text="Generar", command=configurarDF, width=10)
+
+    # ************************************************************************
+    # POSICIONAMIENTO DE WIDGETS
+    # ************************************************************************
+    label_pais.grid(row=0, column=0, padx=[25, 10])
+    paises_cb.grid(row=0, column=1, padx=[0, 25])
+    botonGenerarTabla.grid(row=2, columnspan=2, pady=[15, 0], ipadx=5, ipady=5)
+
+    # ************************************************************************
+    # COMPORTAMIENTO
+    # ************************************************************************
+    # textoEstado.focus_force()
+    # textoEstado.bind("<Tab>", focus_next_widget)
+    paises_cb.bind("<Tab>", focus_next_widget)
     botonGenerarTabla.bind("<Return>", presionado)
 
     # ***************** configuraciones *******************************
-    textoEstado.configure(font=("arial", 10))
-    textoCiudad.configure(font=("arial", 10))
-
+    # textoEstado.configure(font=("arial", 10))
+    # textoCiudad.configure(font=("arial", 10))
 
     ventana.config(menu=menubar)
     ventana.mainloop()
