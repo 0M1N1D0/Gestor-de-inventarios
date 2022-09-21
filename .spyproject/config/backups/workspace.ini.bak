@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['main.py', 'interfazGraficaUsuario\\ventanaPrincipal.py', 'interfazGraficaUsuario\\ventanaExistencias.py']
+recent_files = ['interfazGraficaUsuario\\ventanaPrincipal.py', 'interfazGraficaUsuario\\ventanaExistencias.py', 'interfazGraficaUsuario\\ventanaInventariogeneral.py', 'interfazGraficaUsuario\\ventanaImportarArchivo.py', 'gestiondb\\db_existencias.py', 'gestiondb\\db_inventarioGeneral.py']
 
 [main]
 version = 0.2.0

@@ -45,7 +45,7 @@ def importarArchivo():
         elif nombreArchivo.startswith("inventarioGeneral"):
             guardaInventarioGeneral(rutaArchivo)
             ventana.destroy()
-        elif nombreArchivo == "existencias.xlsx":
+        elif nombreArchivo.startswith("existencias"):
             guardaExistencias(rutaArchivo)
             ventana.destroy()
 
