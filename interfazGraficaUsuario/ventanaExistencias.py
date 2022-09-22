@@ -5,7 +5,7 @@ from tkinter import messagebox
 from tkinter.ttk import Combobox
 import pandas as pd
 from pandastable import Table
-import unidecode
+import unidecode # elimina tildes y acentos
 
 global df_existencias_centros
 global listado_almacenes
@@ -47,6 +47,7 @@ def ventanaExistencias():
         tabla = tk.Toplevel()
         tabla.iconbitmap("interfazGraficaUsuario\icono2.ico")
         tabla.title("Existencias SAP")
+        tabla.geometry("900x500")
         pt = Table(tabla, dataframe=df_existencias_centros, enable_menus=True,
                    showstatusbar=True, editable=True)
         pt.show()
@@ -145,7 +146,7 @@ def ventanaExistencias():
     # comportamiento
 
     def presionado(event):
-        generartabla()
+        buscar_nombre_producto()
 
     # ************************************************************************
     # CREACION DE VENTANA

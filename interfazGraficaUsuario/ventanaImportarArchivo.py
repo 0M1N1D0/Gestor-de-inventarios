@@ -33,10 +33,8 @@ def importarArchivo():
     # db correspondiente para su ingreso
 
     def determinarNombreArchivo(ruta):
-        #print("ruta", ruta)
         nonlocal nombreArchivo
         nombreArchivo = ntpath.basename(ruta)
-        #print("nombreArchivo", nombreArchivo)
 
     def guardarEnDB():
         if nombreArchivo == "centrosLogisticos.xlsx":
@@ -46,6 +44,9 @@ def importarArchivo():
             guardaInventarioGeneral(rutaArchivo)
             ventana.destroy()
         elif nombreArchivo.startswith("existencias"):
+            guardaExistencias(rutaArchivo)
+            ventana.destroy()
+        elif nombreArchivo.startswith("estatusShopping"):
             guardaExistencias(rutaArchivo)
             ventana.destroy()
 

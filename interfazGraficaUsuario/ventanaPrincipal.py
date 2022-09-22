@@ -5,6 +5,7 @@ from .ventanaImportarArchivo import importarArchivo
 from .ventanaCentrosLogisticos import ventanaCentrosLogisticos
 from .ventanaInventariogeneral import ventanaInventarioGeneral
 from.ventanaExistencias import ventanaExistencias
+from.ventanaActualizarEstatusShopping import actualizar_estatus_shopping
 
 
 class VentanaPrincipal:
@@ -40,14 +41,11 @@ class VentanaPrincipal:
         menubar = tk.Menu(root)
 
         # tearoff=0 elimina linea superior
-        importar = tk.Menu(menubar, tearoff=0)
+        actualizar = tk.Menu(menubar, tearoff=0)
         # importar.add_command(label="Existencias SAP", command=importarArchivo)
-        importar.add_command(label="Estatus shopping")
-        importar.add_command(label="Centros logísticos",
-                             command=importarArchivo)
+        actualizar.add_command(label="Centros logísticos", command=importarArchivo)          
 
         sub_inventario_general = tk.Menu(menubar, tearoff=0)
-        
         sub_inventario_general.add_command(
             label='Argentina', command=importarArchivo)
         sub_inventario_general.add_command(
@@ -93,21 +91,21 @@ class VentanaPrincipal:
         sub_inventario_general.add_command(
             label='USA', command=importarArchivo)
 
-        menubar.add_cascade(label="Actualizar", menu=importar)
-        importar.add_cascade(label="Existencias SAP", 
-                             menu=sub_inventario_general)
-        importar.add_cascade(label="Inventario general",
-                             menu=sub_inventario_general)
+        sub_estatus_shopping = tk.Menu(menubar, tearoff=0)
+        sub_estatus_shopping.add_command(label="General", command=importarArchivo)
+        sub_estatus_shopping.add_command(label="Por producto", command=actualizar_estatus_shopping)
 
-        visualizacionAnalisis = tk.Menu(menubar, tearoff=0)
-        visualizacionAnalisis.add_command(
-            label="Existencias SAP", command=ventanaExistencias)
-        visualizacionAnalisis.add_command(label="Estatus shopping")
-        visualizacionAnalisis.add_command(
-            label="Centros logísticos", command=ventanaCentrosLogisticos)
-        visualizacionAnalisis.add_command(
-            label="Inventario general", command=ventanaInventarioGeneral)
-        menubar.add_cascade(label="Consultas", menu=visualizacionAnalisis)
+        menubar.add_cascade(label="Actualizar", menu=actualizar)
+        actualizar.add_cascade(label="Existencias SAP", menu=sub_inventario_general)
+        actualizar.add_cascade(label="Inventario general",menu=sub_inventario_general)
+        actualizar.add_cascade(label="Estatus shopping", menu=sub_estatus_shopping)
+
+        consultar = tk.Menu(menubar, tearoff=0)
+        consultar.add_command(label="Existencias SAP", command=ventanaExistencias)
+        consultar.add_command(label="Estatus shopping")
+        consultar.add_command(label="Centros logísticos", command=ventanaCentrosLogisticos)
+        consultar.add_command(label="Inventario general", command=ventanaInventarioGeneral)
+        menubar.add_cascade(label="Consultar", menu=consultar)
 
         root.config(menu=menubar)
         root.mainloop()
