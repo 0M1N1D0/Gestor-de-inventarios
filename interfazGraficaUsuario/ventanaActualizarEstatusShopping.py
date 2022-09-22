@@ -1,7 +1,5 @@
 import tkinter as tk
 
-
-
 def actualizar_estatus_shopping():
 
     #***********************************************************************
@@ -26,21 +24,27 @@ def actualizar_estatus_shopping():
                 -sub_frame3
     '''
 
+
+    # ************************************************************************
+    # CREACION DE FRAMES
+    # ************************************************************************
     frame1 = tk.Frame(root)
     frame2 = tk.Frame(root)
-
+    label_frame = tk.LabelFrame(frame2, text="Estatus")
+    sub_frame1 = tk.Frame(label_frame)
+    sub_frame2 = tk.Frame(label_frame)
+    sub_frame3 = tk.Frame(label_frame)
+    
+    # ************************************************************************
+    # POSICIONAMIENTO DE FRAMES
+    # ************************************************************************
     frame1.grid(sticky="wn")
     frame2.grid(sticky="s")
-
-    label_frame = tk.LabelFrame(frame2, text="Estatus")
     label_frame.grid()
-
-    sub_frame1 = tk.Frame(label_frame)
     sub_frame1.grid(padx=10, sticky="w")
-    sub_frame2 = tk.Frame(label_frame)
     sub_frame2.grid(padx=10, pady=[0,10])
-    sub_frame3 = tk.Frame(label_frame)
     sub_frame3.grid()
+
 
     # ************************************************************************
     # MENU BAR
