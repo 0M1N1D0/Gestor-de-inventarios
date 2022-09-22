@@ -22,6 +22,7 @@ def actualizar_estatus_shopping():
                 -sub_frame1
                 -sub_frame2
                 -sub_frame3
+                -sub_frame4
     '''
 
 
@@ -34,6 +35,7 @@ def actualizar_estatus_shopping():
     sub_frame1 = tk.Frame(label_frame)
     sub_frame2 = tk.Frame(label_frame)
     sub_frame3 = tk.Frame(label_frame)
+    sub_frame4 = tk.Frame(label_frame)
     
     # ************************************************************************
     # POSICIONAMIENTO DE FRAMES
@@ -44,7 +46,7 @@ def actualizar_estatus_shopping():
     sub_frame1.grid(padx=10, sticky="w")
     sub_frame2.grid(padx=10, pady=[0,10])
     sub_frame3.grid()
-
+    sub_frame4.grid(sticky="w")
 
     # ************************************************************************
     # MENU BAR
@@ -129,6 +131,10 @@ def actualizar_estatus_shopping():
     boton_cancelar.grid(row=3, column=0, ipadx=5, padx=[0, 5], pady=[5, 10], ipady=5)
     boton_confirmar.grid(row=3, column=1, ipadx=5, padx=[5, 0], pady=[5, 10], ipady=5)
 
+    label_aviso = tk.Label(sub_frame4, text="En caso de confirmar actualización, recuerda actualizar el DRIVE.")
+    label_aviso.grid(row=4, column=0)
+
+
 
     # ************************************************************************
     # CONFIGURACION DE WODGETS
@@ -144,6 +150,8 @@ def actualizar_estatus_shopping():
     texto_lapaz.configure(font=("arial", 8))
     texto_sanluis.configure(font=("arial", 8))
     texto_hermosillo.configure(font=("arial", 8))
+
+    label_aviso.config(fg="red")
 
     #***********************************************************************
     # FIN DE ROOT
