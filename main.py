@@ -1,4 +1,4 @@
-from interfazGraficaUsuario.ventanaPrincipal import VentanaPrincipal 
+from interfazGraficaUsuario.ventanaPrincipal import ventanaPrincipal 
 
 if __name__ == "__main__":
-    startApp = VentanaPrincipal()
+    startApp = ventanaPrincipal()

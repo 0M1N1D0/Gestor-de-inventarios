@@ -7,7 +7,7 @@ from gestiondb.db_inventarioGeneral import guardaInventarioGeneral
 from gestiondb.db_existencias import guardaExistencias
 
 
-def importarArchivo():
+def importarArchivo(pais):
     
     # ************************************************************************
     # FUNCIONES
@@ -59,7 +59,7 @@ def importarArchivo():
     respuesta = "No"
     rutaArchivo: str
     nombreArchivo: str
-    ventana.title("Importar")
+    ventana.title(f"Importar {pais}")
     # ventana.geometry("260x135")
     ventana.iconbitmap("interfazGraficaUsuario\icono2.ico")
     ventana.resizable(False, False)
