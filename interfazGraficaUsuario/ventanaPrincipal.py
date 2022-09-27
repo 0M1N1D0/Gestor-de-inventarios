@@ -6,6 +6,7 @@ from .ventanaCentrosLogisticos import ventanaCentrosLogisticos
 from .ventanaInventariogeneral import ventanaInventarioGeneral
 from .ventanaExistencias import ventanaExistencias
 from .estatus_shopping.estatusShoppingMexico import actualizar_estatus_shopping_mexico
+from .ventanaEstatusShopping import ventanaEstatusShopping
 
 
 def ventanaPrincipal():
@@ -157,7 +158,7 @@ def ventanaPrincipal():
 
     consultar = tk.Menu(menubar, tearoff=0)
     consultar.add_command(label="Existencias SAP", command=ventanaExistencias)
-    consultar.add_command(label="Estatus shopping")
+    consultar.add_command(label="Estatus shopping", command=ventanaEstatusShopping)
     consultar.add_command(label="Centros logísticos", command=ventanaCentrosLogisticos)
     consultar.add_command(label="Inventario general", command=ventanaInventarioGeneral)
     menubar.add_cascade(label="Consultar", menu=consultar)

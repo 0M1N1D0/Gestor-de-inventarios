@@ -34,12 +34,12 @@ def ventanaExistencias():
             nonlocal texto_producto
             df_existencias_centros = None
             listado_almacenes = []
-            almacen = None
+            almacen = ""
             paises_cb.delete(0, 100)
             almacenes_cb.delete(0, 100)
             texto_producto.delete("1.0", "end")
             tabla.destroy()
-            print(df_existencias_centros)
+            
 
             
         
@@ -51,6 +51,7 @@ def ventanaExistencias():
         pt = Table(tabla, dataframe=df_existencias_centros, enable_menus=True,
                    showstatusbar=True, editable=True)
         pt.show()
+        pt.focus_force()
         
         tabla.protocol("WM_DELETE_WINDOW", on_closing)
         
@@ -110,7 +111,6 @@ def ventanaExistencias():
         
        
         if nombre_producto and almacen != "":
-            print(almacen)
             df_existencias_centros = df_existencias_centros[
                 df_existencias_centros['Descripción'].str.contains(nombre_producto)]
             df_existencias_centros = df_existencias_centros[
@@ -118,7 +118,7 @@ def ventanaExistencias():
         elif almacen:
             df_existencias_centros = df_existencias_centros[
                 df_existencias_centros['Concep búsqueda 1'].str.contains(almacen)]
-        elif nombre_producto:
+        elif nombre_producto or almacen == "":
             df_existencias_centros = df_existencias_centros[
                 df_existencias_centros['Descripción'].str.contains(nombre_producto)]
 
@@ -135,8 +135,6 @@ def ventanaExistencias():
         almacen = almacenes_cb.get()
         almacen = almacen.upper()
         
-        
-
 
     # comportamiento TAB
     def focus_next_widget(event):

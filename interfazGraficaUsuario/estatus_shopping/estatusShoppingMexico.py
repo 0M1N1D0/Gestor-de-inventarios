@@ -108,6 +108,20 @@ def actualizar_estatus_shopping_mexico():
         else: 
             messagebox.showinfo(title="Actualizar estatus", message="Estatus actualizado(s) correctamente en base de datos.")
             root.focus_force()
+
+            # limpa los datos
+            texto_codigo.delete("1.0", "end")
+            texto_sku.delete("1.0", "end")
+            texto_nombre.delete("1.0", "end")
+            texto_estatus.delete("1.0", "end")
+            texto_telemark.delete("1.0", "end")
+            texto_tijuana.delete("1.0", "end")
+            texto_colroma.delete("1.0", "end")
+            texto_villahermosa.delete("1.0", "end")
+            texto_lapaz.delete("1.0", "end")
+            texto_sanluis.delete("1.0", "end")
+            texto_hermosillo.delete("1.0", "end")
+
         
 
 
