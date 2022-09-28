@@ -53,6 +53,7 @@ def ventanaExistencias():
         pt.show()
         pt.focus_force()
         
+        # evento en caso que se cierre la ventana
         tabla.protocol("WM_DELETE_WINDOW", on_closing)
         
         
