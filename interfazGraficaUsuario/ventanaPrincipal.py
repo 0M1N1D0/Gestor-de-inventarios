@@ -150,11 +150,14 @@ def ventanaPrincipal():
     sub_estatus_shopping.add_cascade(label="General", menu=sub_inventario_general)
     sub_estatus_shopping.add_cascade(label="Por producto", menu=sub_estatus_shopping_pais)
 
+    sub_estatus_dp = tk.Menu(menubar, tearoff=0)
+    sub_estatus_dp.add_command(label="México", command=importarArchivoMex)
 
     menubar.add_cascade(label="Actualizar", menu=actualizar)
     actualizar.add_cascade(label="Existencias SAP", menu=sub_inventario_general)
     actualizar.add_cascade(label="Inventario general",menu=sub_inventario_general)
     actualizar.add_cascade(label="Estatus shopping", menu=sub_estatus_shopping)
+    actualizar.add_cascade(label="Estatus DP", menu=sub_estatus_dp)
 
     consultar = tk.Menu(menubar, tearoff=0)
     consultar.add_command(label="Existencias SAP", command=ventanaExistencias)

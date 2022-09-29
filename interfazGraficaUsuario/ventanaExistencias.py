@@ -38,9 +38,10 @@ def ventanaExistencias():
             paises_cb.delete(0, 100)
             almacenes_cb.delete(0, 100)
             texto_producto.delete("1.0", "end")
-            almacenes_cb.config(state=tk.DISABLED)
-            texto_producto.config(state=tk.DISABLED)
-            boton_generar.config(state=tk.DISABLED)
+            inhabilita_widgets()
+            # almacenes_cb.config(state=tk.DISABLED)
+            # texto_producto.config(state=tk.DISABLED)
+            # boton_generar.config(state=tk.DISABLED)
             tabla.destroy()
             
 
@@ -51,8 +52,8 @@ def ventanaExistencias():
         tabla.iconbitmap("interfazGraficaUsuario\icono2.ico")
         tabla.title("Existencias SAP")
         tabla.geometry("900x500")
-        pt = Table(tabla, dataframe=df_existencias_centros, enable_menus=True,
-                   showstatusbar=True, editable=True)
+        pt = Table(tabla, dataframe=df_existencias_centros, enable_menus=False,
+                   showstatusbar=True, editable=False)
         pt.show()
         pt.focus_force()
         
@@ -132,17 +133,19 @@ def ventanaExistencias():
             paises_cb.delete(0,100)
             almacenes_cb.delete(0,100)
             texto_producto.delete("1.0", "end")
-            almacenes_cb.config(state=tk.DISABLED)
-            texto_producto.config(state=tk.DISABLED)
-            boton_generar.config(state=tk.DISABLED)
+            inhabilita_widgets()
+            # almacenes_cb.config(state=tk.DISABLED)
+            # texto_producto.config(state=tk.DISABLED)
+            # boton_generar.config(state=tk.DISABLED)
         else:
             generartabla()
 
 
     def on_select_pais(event):
-        almacenes_cb.config(state=tk.NORMAL)
-        texto_producto.config(state=tk.NORMAL)
-        boton_generar.config(state=tk.NORMAL)
+        habilita_widgets()
+        # almacenes_cb.config(state=tk.NORMAL)
+        # texto_producto.config(state=tk.NORMAL)
+        # boton_generar.config(state=tk.NORMAL)
         seleccion_pais()
         almacenes_cb['values'] = listado_almacenes
 
@@ -158,10 +161,22 @@ def ventanaExistencias():
         event.widget.tk_focusNext().focus()
         return("break")
 
-    # comportamiento
-
+    # comportamiento boton presionado
     def presionado(event):
         buscar_nombre_producto()
+
+
+    # inhabilita los widgets
+    def inhabilita_widgets():
+        almacenes_cb.config(state=tk.DISABLED)
+        texto_producto.config(state=tk.DISABLED)
+        boton_generar.config(state=tk.DISABLED)
+
+
+    def habilita_widgets():
+        almacenes_cb.config(state=tk.NORMAL)
+        texto_producto.config(state=tk.NORMAL)
+        boton_generar.config(state=tk.NORMAL)
 
     # ************************************************************************
     # CREACION DE VENTANA
@@ -242,9 +257,10 @@ def ventanaExistencias():
     # CONFIGURACION DE WODGETS
     # ************************************************************************
     texto_producto.configure(font=("arial", 10))
-    almacenes_cb.config(state=tk.DISABLED)
-    texto_producto.config(state=tk.DISABLED)
-    boton_generar.config(state=tk.DISABLED)
+    inhabilita_widgets()
+    # almacenes_cb.config(state=tk.DISABLED)
+    # texto_producto.config(state=tk.DISABLED)
+    # boton_generar.config(state=tk.DISABLED)
     # ************************************************************************
     # Comportamiento
     # ************************************************************************
