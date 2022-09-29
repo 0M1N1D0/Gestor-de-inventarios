@@ -1,6 +1,5 @@
 
 from tkinter import messagebox
-from turtle import title
 from pandastable import Table
 import tkinter as tk
 import pandas as pd
@@ -63,6 +62,7 @@ def ventanaEstatusShopping():
     def limpia_datos():
         paises_cb.delete(0,100)
         texto_codigo.delete("1.0", "end")
+        paises_gen_cb.delete(0,100)
 
     # genera el DF con el país y producto ingresados.
     # cuando se cierra la tabla, limpia los datos.
@@ -99,7 +99,6 @@ def ventanaEstatusShopping():
             else:
                 df_codigo = df[df['SKU'] == int(codigo)]
                 
-                print(codigo)
 
                 if df_codigo.empty:
                     messagebox.showerror(message="El código ingresado no se encuentra en la base de datos.")
@@ -132,36 +131,55 @@ def ventanaEstatusShopping():
             tabla_gen.destroy()
             limpia_datos()
 
+
         pais = paises_gen_cb.get()
-        pais = unidecode.unidecode(pais)
-        nombre_tabla = "estatusShopping" + pais
+        
+        if pais == "":
+            messagebox.showerror(message="El país no se a ingresado o no se encuentra en la base de datos.")
+        else:
+            pais = unidecode.unidecode(pais)
+            nombre_tabla = "estatusShopping" + pais
 
-        #***********************************************************************
-        # CONEXION A DB Y CREACION DE DF 
-        #***********************************************************************
-        conexion = sqlite3.connect("gestorInventariosdb.db")
 
-        try:
-            df = pd.read_sql_query(f"SELECT * FROM {nombre_tabla}", con=conexion)
-        except:
-            messagebox.showerror(message="El código ingresado no se encuentra en la base de datos.")
-            messagebox.showwarning(message="El código ingresado debe ser en formato CORBIZ (a 7 dígitos).\nEjemplo: 2603201")
-            limpia_datos()
+            #***********************************************************************
+            # CONEXION A DB Y CREACION DE DF 
+            #***********************************************************************
+            conexion = sqlite3.connect("gestorInventariosdb.db")
 
-        tabla_gen = tk.Toplevel()
-        tabla_gen.title(f"Estatus shopping support {pais}")
-        tabla_gen.iconbitmap("interfazGraficaUsuario\icono2.ico")
-        pt = Table(
-                        tabla_gen, 
-                        dataframe=df, 
-                        enable_menus=False, 
-                        showstatusbar=False, 
-                        editable=False, 
-                        width=900, 
-                        height=500
-                    )
-        pt.show()
-        tabla_gen.protocol("WM_DELETE_WINDOW", cerrando_tabla_pais)
+            try:
+                df = pd.read_sql_query(f"SELECT * FROM {nombre_tabla}", con=conexion)
+            except:
+                messagebox.showerror(message="El país ingresado no se encuentra en la base de datos.")
+                limpia_datos()
+
+            else:
+                tabla_gen = tk.Toplevel()
+                tabla_gen.title(f"Estatus shopping support {pais}")
+                tabla_gen.iconbitmap("interfazGraficaUsuario\icono2.ico")
+                pt = Table(
+                                tabla_gen, 
+                                dataframe=df, 
+                                enable_menus=False, 
+                                showstatusbar=False, 
+                                editable=False, 
+                                width=900, 
+                                height=500
+                            )
+                pt.show()
+                tabla_gen.protocol("WM_DELETE_WINDOW", cerrando_tabla_pais)
+
+
+    def focus_next_widget(event):
+        event.widget.tk_focusNext().focus()
+        return("break")
+
+
+    def boton_buscar_presionado(event):
+        buscar_producto()
+
+
+    def boton_generar_presionado(event):
+        buscar_pais()
 
 
     #***********************************************************************
@@ -311,12 +329,14 @@ def ventanaEstatusShopping():
     # COMPORTAMIENTO DE WIDGETS
     #***********************************************************************
     #check_producto.select()
-    
+    texto_codigo.bind("<Tab>", focus_next_widget)
+    boton_buscar.bind("<Return>", boton_buscar_presionado)
+    boton_generar.bind("<Return>", boton_generar_presionado)
 
     #***********************************************************************
     # CONFGURACION DE WIDGETS
     #**********************************************************************
-    texto_codigo.configure(font=("arial", 10))
+    texto_codigo.configure(font=("arial", 9))
     root.config(menu=menubar)
     inhabilita_widgets_general()
     inhabilita_widgets_producto()

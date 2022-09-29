@@ -1,7 +1,7 @@
 
 import tkinter as tk
 import sqlite3
-from tkinter import messagebox
+from tkinter import DISABLED, messagebox
 from tkinter.ttk import Combobox
 import pandas as pd
 from pandastable import Table
@@ -38,6 +38,9 @@ def ventanaExistencias():
             paises_cb.delete(0, 100)
             almacenes_cb.delete(0, 100)
             texto_producto.delete("1.0", "end")
+            almacenes_cb.config(state=tk.DISABLED)
+            texto_producto.config(state=tk.DISABLED)
+            boton_generar.config(state=tk.DISABLED)
             tabla.destroy()
             
 
@@ -79,17 +82,18 @@ def ventanaExistencias():
             messagebox.showerror(
                 title="Error", message="Ocurrió un error al cargar la base de datos.")
 
-        # merge
-        df_existencias_centros = pd.merge(
-            left=df_existencias, right=df_centrosLogisticos, how='left', on='Centro')
-        # filtrado de columnas
-        df_existencias_centros = df_existencias_centros[[
-            'Centro', 'Concep búsqueda 1', 'Código', 'Descripción', 'Existencias']]
+        else:
+            # merge
+            df_existencias_centros = pd.merge(
+                left=df_existencias, right=df_centrosLogisticos, how='left', on='Centro')
+            # filtrado de columnas
+            df_existencias_centros = df_existencias_centros[[
+                'Centro', 'Concep búsqueda 1', 'Código', 'Descripción', 'Existencias']]
 
-        conexion.close()
+            conexion.close()
 
-        crea_lista_almacenes(df_existencias_centros)
-        # buscar_nombre_producto(df_existencias_centros)
+            crea_lista_almacenes(df_existencias_centros)
+            # buscar_nombre_producto(df_existencias_centros)
 
 
     # crea una lista con los almacenes del país seleccionado
@@ -110,7 +114,7 @@ def ventanaExistencias():
         nombre_producto = texto_producto.get(1.0, "end-1c")
         nombre_producto = nombre_producto.upper()
         
-       
+      
         if nombre_producto and almacen != "":
             df_existencias_centros = df_existencias_centros[
                 df_existencias_centros['Descripción'].str.contains(nombre_producto)]
@@ -123,10 +127,22 @@ def ventanaExistencias():
             df_existencias_centros = df_existencias_centros[
                 df_existencias_centros['Descripción'].str.contains(nombre_producto)]
 
-        generartabla()
+        if df_existencias_centros.empty:
+            messagebox.showerror(message="Código de producto erróneo. Sin datos que generar.")
+            paises_cb.delete(0,100)
+            almacenes_cb.delete(0,100)
+            texto_producto.delete("1.0", "end")
+            almacenes_cb.config(state=tk.DISABLED)
+            texto_producto.config(state=tk.DISABLED)
+            boton_generar.config(state=tk.DISABLED)
+        else:
+            generartabla()
 
 
     def on_select_pais(event):
+        almacenes_cb.config(state=tk.NORMAL)
+        texto_producto.config(state=tk.NORMAL)
+        boton_generar.config(state=tk.NORMAL)
         seleccion_pais()
         almacenes_cb['values'] = listado_almacenes
 
@@ -150,7 +166,7 @@ def ventanaExistencias():
     # ************************************************************************
     # CREACION DE VENTANA
     # ************************************************************************
-    ventana = tk.Tk()
+    ventana = tk.Toplevel()
     ventana.title("Existencias SAP")
     # ventana.geometry("280x70")
     ventana.resizable(False, False)
@@ -226,7 +242,9 @@ def ventanaExistencias():
     # CONFIGURACION DE WODGETS
     # ************************************************************************
     texto_producto.configure(font=("arial", 10))
-
+    almacenes_cb.config(state=tk.DISABLED)
+    texto_producto.config(state=tk.DISABLED)
+    boton_generar.config(state=tk.DISABLED)
     # ************************************************************************
     # Comportamiento
     # ************************************************************************
@@ -239,4 +257,4 @@ def ventanaExistencias():
     # FIN DE VENTANA
     # ************************************************************************
     ventana.config(menu=menubar)
-    ventana.mainloop()
+  
