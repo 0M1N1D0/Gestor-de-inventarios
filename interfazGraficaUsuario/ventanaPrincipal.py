@@ -7,6 +7,7 @@ from .ventanaInventariogeneral import ventanaInventarioGeneral
 from .ventanaExistencias import ventanaExistencias
 from .estatus_shopping.estatusShoppingMexico import actualizar_estatus_shopping_mexico
 from .ventanaEstatusShopping import ventanaEstatusShopping
+from .ventanaEstatusDP import estatusDP
 
 
 def ventanaPrincipal():
@@ -164,6 +165,7 @@ def ventanaPrincipal():
     consultar.add_command(label="Estatus shopping", command=ventanaEstatusShopping)
     consultar.add_command(label="Centros logísticos", command=ventanaCentrosLogisticos)
     consultar.add_command(label="Inventario general", command=ventanaInventarioGeneral)
+    consultar.add_command(label="Estatus DP", command=estatusDP)
     menubar.add_cascade(label="Consultar", menu=consultar)
 
     root.config(menu=menubar)

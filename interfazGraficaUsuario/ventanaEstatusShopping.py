@@ -335,7 +335,7 @@ def ventanaEstatusShopping():
 
     #***********************************************************************
     # CONFGURACION DE WIDGETS
-    #**********************************************************************
+    #***********************************************************************
     texto_codigo.configure(font=("arial", 9))
     root.config(menu=menubar)
     inhabilita_widgets_general()
