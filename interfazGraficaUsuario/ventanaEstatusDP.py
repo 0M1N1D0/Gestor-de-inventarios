@@ -1,3 +1,4 @@
+from distutils.log import error
 from pandastable import Table
 import tkinter as tk
 from tkinter import messagebox
@@ -8,6 +9,9 @@ import unidecode
 
 def estatusDP():
 
+    global error_df 
+    error_df = False
+
     #***********************************************************************
     # FUNCIONES
     #***********************************************************************
@@ -15,6 +19,7 @@ def estatusDP():
     def obtener_df_general():
 
         pais = paises_cb.get()
+        print(pais)
         pais = unidecode.unidecode(pais)
         nombre_tabla = "estatusDP" + pais
 
@@ -23,7 +28,9 @@ def estatusDP():
         try:
             df_general = pd.read_sql_query(f"SELECT * FROM {nombre_tabla}", con=conexion)
         except:
-            messagebox.showerror(title="Error al consultar datos", message="Error al consultar base de datos.")
+            messagebox.showerror(title="Error", message="Error al consultar base de datos.")
+            global error_df
+            error_df = True
             limpia_campos()
             inhabilita_widgets()
             root.focus_force()
@@ -39,51 +46,53 @@ def estatusDP():
 
     def obtener_df_final():
         df_general = obtener_df_general()
+        producto = obtener_texto_producto()
 
-        if df_general == None:
-            messagebox.showwarning(title="Error", message="Los datos en el país seleccionado no existen.")
+            
+        if producto == "":
+            genera_tabla(df_general)
         else:
-        
-            if df_general.empty:
-                messagebox.showwarning(title="Error al consultar datos", message="Selecciona un país.")
+            try:
+                df_final = df_general[df_general['Material'].str.contains(producto)]
+            except:
+                messagebox.showerror(message="Error al consultar la información.")
+                limpia_campos()
+                root.focus_force()
             else:
-                producto = obtener_texto_producto()
-                
-                if producto == "":
-                    genera_tabla(df_general)
+                if df_final.empty:
+                    messagebox.showerror(title="Error", message="El nombre del producto no se encuentra en la base de datos.")
+                    limpia_campos()
+                    inhabilita_widgets()
+                    root.focus_force()
                 else:
-                    try:
-                        df_final = df_general[df_general['Material'].str.contains(producto)]
-                    except:
-                        messagebox.showerror(message="Error al consultar la información.")
-                        limpia_campos()
-                        root.focus_force()
-                    else:
-                        if df_final.empty:
-                            messagebox.showerror(title="Error", message="El nombre del producto no se encuentra en la base de datos.")
-                            limpia_campos()
-                            root.focus_force()
-                        else:
-                            genera_tabla(df_final)
+                    genera_tabla(df_final)
 
 
     def genera_tabla(df):
+
+        global error_df
 
         def on_closing():
             limpia_campos()
             tabla.destroy()
             inhabilita_widgets()
 
-        tabla = tk.Toplevel()
-        tabla.iconbitmap("interfazGraficaUsuario\icono2.ico")
-        tabla.title("Estatus planeación de la demada")
-        tabla.geometry("700x300")
-        pt = Table(tabla, dataframe=df, enable_menus=False, showstatusbar=False, editable=False)
-        pt.show()
-        pt.focus_force()
-
-        tabla.protocol("WM_DELETE_WINDOW", on_closing)
+        if error_df:
+            limpia_campos()
+            inhabilita_widgets()
+            error_df = False
     
+        else:
+            tabla = tk.Toplevel()
+            tabla.iconbitmap("interfazGraficaUsuario\icono2.ico")
+            tabla.title("Estatus planeación de la demada")
+            tabla.geometry("700x300")
+            pt = Table(tabla, dataframe=df, enable_menus=False, showstatusbar=False, editable=False)
+            pt.show()
+            pt.focus_force()
+
+            tabla.protocol("WM_DELETE_WINDOW", on_closing)
+        
            
     def limpia_campos():
         paises_cb.delete(0,100)
