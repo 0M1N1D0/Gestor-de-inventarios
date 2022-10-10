@@ -52,6 +52,9 @@ def importarArchivo(pais):
         elif nombreArchivo.startswith("estatusDP"):
             guardaExistencias(rutaArchivo)
             ventana.destroy()
+        elif nombreArchivo == "cuponTodosGanan.xlsx":
+            guardaExistencias(rutaArchivo)
+            ventana.destroy()
 
 
     # ************************************************************************

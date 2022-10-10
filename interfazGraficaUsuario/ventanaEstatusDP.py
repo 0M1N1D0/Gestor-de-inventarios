@@ -1,4 +1,4 @@
-from distutils.log import error
+
 from pandastable import Table
 import tkinter as tk
 from tkinter import messagebox
@@ -19,7 +19,6 @@ def estatusDP():
     def obtener_df_general():
 
         pais = paises_cb.get()
-        print(pais)
         pais = unidecode.unidecode(pais)
         nombre_tabla = "estatusDP" + pais
 
@@ -74,8 +73,8 @@ def estatusDP():
 
         def on_closing():
             limpia_campos()
-            tabla.destroy()
             inhabilita_widgets()
+            tabla.destroy()
 
         if error_df:
             limpia_campos()

@@ -8,6 +8,7 @@ from .ventanaExistencias import ventanaExistencias
 from .estatus_shopping.estatusShoppingMexico import actualizar_estatus_shopping_mexico
 from .ventanaEstatusShopping import ventanaEstatusShopping
 from .ventanaEstatusDP import estatusDP
+from .ventanaCuponTodosGanan import cuponTodosGanan
 
 
 def ventanaPrincipal():
@@ -15,6 +16,10 @@ def ventanaPrincipal():
 
     def importarCentroLog():
         importarArchivo('Paises')
+
+    def importarCuponTodosGanan():
+        importarArchivo('Cupon todos ganan paises')
+
 
     def importarArchivoArg():
         importarArchivo('Argentina')
@@ -96,7 +101,9 @@ def ventanaPrincipal():
     # tearoff=0 elimina linea superior
     actualizar = tk.Menu(menubar, tearoff=0)
     # importar.add_command(label="Existencias SAP", command=importarArchivo)
-    actualizar.add_command(label="Centros logísticos", command=importarCentroLog)          
+    actualizar.add_command(label="Centros logísticos", command=importarCentroLog)  
+    actualizar.add_command(label="Cupón todos ganan", command=importarCuponTodosGanan) 
+
 
     sub_inventario_general = tk.Menu(menubar, tearoff=0)
     sub_inventario_general.add_command(label='Argentina', command=importarArchivoArg)
@@ -164,6 +171,7 @@ def ventanaPrincipal():
     consultar.add_command(label="Existencias SAP", command=ventanaExistencias)
     consultar.add_command(label="Estatus shopping", command=ventanaEstatusShopping)
     consultar.add_command(label="Centros logísticos", command=ventanaCentrosLogisticos)
+    consultar.add_command(label="Cupón todos ganan", command=cuponTodosGanan)
     consultar.add_command(label="Inventario general", command=ventanaInventarioGeneral)
     consultar.add_command(label="Estatus DP", command=estatusDP)
     menubar.add_cascade(label="Consultar", menu=consultar)
