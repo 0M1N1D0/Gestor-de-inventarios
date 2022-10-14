@@ -1,4 +1,4 @@
-
+from tkinter import ttk
 import sqlite3
 import tkinter as tk
 from tkinter import messagebox
@@ -38,8 +38,8 @@ def actualizar_estatus_shopping_mexico():
                 texto_codigo.delete("1.0", "end")
                 root.focus_force()
 
-            
-            mostrar_producto(df_producto)    
+            else:
+                mostrar_producto(df_producto)    
 
  
         
@@ -206,7 +206,7 @@ def actualizar_estatus_shopping_mexico():
     # ************************************************************************
     label_codigo = tk.Label(frame1, text="Código de producto")
     texto_codigo = tk.Text(frame1, height=1, width=20, bd=2)
-    boton_buscar = tk.Button(frame1, text="Buscar", width=10, command=limpiar_campos)
+    boton_buscar = ttk.Button(frame1, text="Buscar", width=10, command=limpiar_campos)
     
     label_sku = tk.Label(sub_frame1, text="Código")
     label_nombre = tk.Label(sub_frame1, text="Nombre de producto")
@@ -230,8 +230,8 @@ def actualizar_estatus_shopping_mexico():
     texto_sanluis = tk.Text(sub_frame2, height=1, width=15, bd=2)
     texto_hermosillo = tk.Text(sub_frame2, height=1, width=15, bd=2)
 
-    boton_cancelar = tk.Button(sub_frame3, width=10, text="Cancelar", command=root.destroy)
-    boton_confirmar = tk.Button(sub_frame3, width=10, text="Confirmar", command=actualiza_datos)
+    boton_cancelar = ttk.Button(sub_frame3, width=10, text="Cancelar", command=root.destroy)
+    boton_confirmar = ttk.Button(sub_frame3, width=10, text="Confirmar", command=actualiza_datos)
 
 
     '''

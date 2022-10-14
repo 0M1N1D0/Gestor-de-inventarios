@@ -1,3 +1,4 @@
+
 import tkinter as tk
 import sqlite3
 from tkinter.ttk import Combobox
@@ -5,9 +6,11 @@ import pandas as pd
 from tkinter import messagebox
 from pandastable import Table
 import unidecode  # elimina los acentos y tildes del nombre pais
+from tkinter import ttk
 
 
 def ventanaInventarioGeneral():
+
 
     def seleccion_pais():
         pais = comboB_pais.get()
@@ -28,6 +31,7 @@ def ventanaInventarioGeneral():
 
         buscarProducto(df)
 
+
     def buscarProducto(df):
         '''
             Filtra el DF con el texto ingresado. 
@@ -45,6 +49,7 @@ def ventanaInventarioGeneral():
 
     # función que genera la tabla
 
+
     def generartabla(df):
         tabla = tk.Toplevel()
         tabla.iconbitmap("interfazGraficaUsuario\icono2.ico")
@@ -54,21 +59,42 @@ def ventanaInventarioGeneral():
         pt.show()
         pt.focus_force()
 
+
     def focus_next_widget(event):
         event.widget.tk_focusNext().focus()
         return("break")
 
+
     def presionado(event):
         buscarProducto()
 
-    # ************** creación de ventana root ******************************
-    ventana = tk.Tk()
+    
+    def inhabilita_widgets():
+        textoBuscar.config(state=tk.DISABLED)
+        botonGenerar.config(state=tk.DISABLED)
+
+
+    def habilita_widgets():
+        textoBuscar.config(state=tk.NORMAL)
+        botonGenerar.config(state=tk.NORMAL)
+
+
+    def on_select_pais(event):
+        habilita_widgets()
+
+    #***********************************************************************
+    # CREACION DE ROOT
+    #***********************************************************************
+    ventana = tk.Toplevel()
     ventana.title("Inventario general")
     ventana.resizable(False, False)
     ventana.iconbitmap("interfazGraficaUsuario\icono2.ico")
     ventana.configure(padx=15, pady=15)
 
-    # *********** menu bar **********************
+
+    # ************************************************************************
+    # MENU BAR
+    # ************************************************************************
     menubar = tk.Menu(ventana)
 
     archivo = tk.Menu(menubar, tearoff=0)
@@ -78,14 +104,16 @@ def ventanaInventarioGeneral():
     ayuda = tk.Menu(menubar, tearoff=0)
     ayuda.add_command(label="Manual de usuario")
     menubar.add_cascade(label="Ayuda", menu=ayuda)
-    # ********************************************
 
-    # ****************** creacion widgets *****************************
+
+    #***********************************************************************
+    # CREACION DE WIDGETS
+    #***********************************************************************
     label_pais = tk.Label(ventana, text="País")
     comboB_pais = Combobox(ventana, width=15)
     labelBuscar = tk.Label(ventana, text="Producto")
     textoBuscar = tk.Text(ventana, height=1, width=30)
-    botonGenerar = tk.Button(ventana, text="Generar", command=seleccion_pais)
+    botonGenerar = ttk.Button(ventana, text="Generar", command=seleccion_pais)
 
     comboB_pais['values'] = (
         'Argentina',
@@ -112,20 +140,31 @@ def ventanaInventarioGeneral():
         'USA'
     )
 
-    # ****************** posición widgets *****************************
+
+    #***********************************************************************
+    # POSICIONAMIENTO DE WIDGETS
+    #***********************************************************************
     label_pais.grid(row=0, column=0, pady=[0, 15], sticky="e")
     comboB_pais.grid(row=0, column=1, padx=[10, 0], pady=[0, 15], sticky="w")
     labelBuscar.grid(row=1, column=0)
     textoBuscar.grid(row=1, column=1, padx=[10, 0])
     botonGenerar.grid(columnspan=2, pady=[15, 0], ipadx=10, ipady=5)
 
-    # ***************** configuraciones *******************************
+
+    #***********************************************************************
+    # CONFIGURACION DE WIDGETS
+    #***********************************************************************  
     textoBuscar.configure(font=("arial", 10))
 
-    # *************** comportamientos **************************************
+
+    #***********************************************************************
+    # COMPORTAMIENTO DE WIDGETS
+    #*********************************************************************** 
     textoBuscar.focus_force()
     textoBuscar.bind("<Tab>", focus_next_widget)
     botonGenerar.bind("<Return>", presionado)
+    comboB_pais.bind("<<ComboboxSelected>>", on_select_pais)
 
     ventana.config(menu=menubar)
-    ventana.mainloop()
+    inhabilita_widgets()
+

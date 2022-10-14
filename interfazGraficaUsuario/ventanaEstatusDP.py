@@ -6,6 +6,8 @@ from tkinter.ttk import Combobox
 import pandas as pd
 import sqlite3
 import unidecode
+from tkinter import ttk
+
 
 def estatusDP():
 
@@ -175,7 +177,7 @@ def estatusDP():
 
     label_producto = tk.Label(root, text="Nombre de producto")
     texto_producto = tk.Text(root, height=1, width=15, bd=2)
-    boton_generar = tk.Button(root, text="Generar", width=10, command=obtener_df_final)
+    boton_generar = ttk.Button(root, text="Generar", width=10, command=obtener_df_final)
 
 
     #***********************************************************************

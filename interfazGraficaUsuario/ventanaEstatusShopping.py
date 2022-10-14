@@ -6,7 +6,7 @@ import pandas as pd
 import sqlite3
 from tkinter.ttk import Combobox
 import unidecode
-
+from tkinter import ttk
 
 
 def ventanaEstatusShopping():
@@ -231,14 +231,14 @@ def ventanaEstatusShopping():
     check_var_general = tk.IntVar()
 
     # en frame_checks
-    check_producto = tk.Checkbutton(
+    check_producto = ttk.Checkbutton(
         frame_checks, 
         text='Por producto', 
         variable=check_var_prod, 
         command=check_press
     )
 
-    check_general = tk.Checkbutton(
+    check_general = ttk.Checkbutton(
         frame_checks, 
         text='General', 
         variable=check_var_general, 
@@ -275,7 +275,7 @@ def ventanaEstatusShopping():
     ]
     label_codigo_producto = tk.Label(label_frame_producto, text="Código producto")
     texto_codigo = tk.Text(label_frame_producto, height=1, width=15, bd=2)
-    boton_buscar = tk.Button(label_frame_producto, text="Buscar", width=10, command=buscar_producto)
+    boton_buscar = ttk.Button(label_frame_producto, text="Buscar", width=10, command=buscar_producto)
 
     label_pais_gen = tk.Label(label_frame_general, text="País")
     paises_gen_cb = Combobox(label_frame_general)
@@ -303,7 +303,7 @@ def ventanaEstatusShopping():
         'Uruguay',
         'USA'
     ]
-    boton_generar = tk.Button(label_frame_general, text="Generar", width=10, command=buscar_pais)
+    boton_generar = ttk.Button(label_frame_general, text="Generar", width=10, command=buscar_pais)
 
     #***********************************************************************
     # POSICIONAMIENTO DE WIDGETS

@@ -9,6 +9,7 @@ def guardaExistencias(ruta):
     nombre_archivo = ntpath.basename(ruta_archivo)
     nombre_archivo = nombre_archivo[:-5]
 
+
     # importar el archivo a pandas
     df = pd.read_excel(f"{ruta_archivo}")
     # print(df)

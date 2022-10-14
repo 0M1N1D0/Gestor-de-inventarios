@@ -1,4 +1,4 @@
-
+from tkinter import ttk
 import tkinter as tk
 import sqlite3
 from tkinter import Button, messagebox
@@ -115,7 +115,7 @@ def ventanaCentrosLogisticos():
         'USA'
     )
 
-    botonGenerarTabla = Button(
+    botonGenerarTabla = ttk.Button(
         ventana, text="Generar", command=configurarDF, width=10)
 
     # ************************************************************************

@@ -6,6 +6,7 @@ from tkinter.ttk import Combobox
 import pandas as pd
 from pandastable import Table
 import unidecode # elimina tildes y acentos
+from tkinter import ttk
 
 global df_existencias_centros
 global listado_almacenes
@@ -82,6 +83,7 @@ def ventanaExistencias():
         except:
             messagebox.showerror(
                 title="Error", message="Ocurrió un error al cargar la base de datos.")
+            inhabilita_widgets()
 
         else:
             # merge
@@ -239,7 +241,7 @@ def ventanaExistencias():
     almacenes_cb['values'] = listado_almacenes
     label_producto = tk.Label(ventana, text='Producto')
     texto_producto = tk.Text(ventana, height=1, width=30, bd=2)
-    boton_generar = tk.Button(ventana, text='Generar',
+    boton_generar = ttk.Button(ventana, text='Generar',
                               command=buscar_nombre_producto)
 
     # ************************************************************************

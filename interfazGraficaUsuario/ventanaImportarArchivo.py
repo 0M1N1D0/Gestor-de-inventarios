@@ -1,6 +1,6 @@
 import tkinter as tk
 import ntpath  # determina el nombre del archivo de la ruta especificada
-from tkinter import filedialog
+from tkinter import filedialog, ttk
 
 from gestiondb.db_centrosLogisticos import guardarCentrosLogisticos
 from gestiondb.db_inventarioGeneral import guardaInventarioGeneral
@@ -55,6 +55,9 @@ def importarArchivo(pais):
         elif nombreArchivo == "cuponTodosGanan.xlsx":
             guardaExistencias(rutaArchivo)
             ventana.destroy()
+        elif nombreArchivo == "historicoyTipoKits.xlsx":
+            guardaExistencias(rutaArchivo)
+            ventana.destroy()
 
 
     # ************************************************************************
@@ -91,13 +94,13 @@ def importarArchivo(pais):
     # CREACION DE WIDGETS
     # ************************************************************************
     labelSeleccion = tk.Label(labelFrame, text="Archivo a importar:")
-    botonBuscar = tk.Button(labelFrame, text="Buscar",
+    botonBuscar = ttk.Button(labelFrame, text="Buscar",
                             width="10", command=buscarArchivo)
     labelMostrarRuta = tk.Label(labelFrame, text="Archivo seleccionado:")
     labelRespuesta = tk.Label(labelFrame, text=respuesta)
-    botonCancelar = tk.Button(ventana, text="Cancelar",
+    botonCancelar = ttk.Button(ventana, text="Cancelar",
                               width="10", command=ventana.destroy)
-    botonGuardar = tk.Button(ventana, text="Guardar",
+    botonGuardar = ttk.Button(ventana, text="Guardar",
                              width="10", command=guardarEnDB)
     
     # ************************************************************************

@@ -1,9 +1,9 @@
 import tkinter as tk
 import pandas as pd
-import unidecode
 import sqlite3
 from pandastable import Table
 from tkinter.ttk import Combobox
+from tkinter import ttk
 
 
 def cuponTodosGanan():
@@ -112,9 +112,9 @@ def cuponTodosGanan():
     #***********************************************************************
     # CREACION DE WIDGETS
     #***********************************************************************
-    label_pais = tk.Label(frame_superior, text="País")
+    label_pais = ttk.Label(frame_superior, text="País")
     paises_cb = Combobox(frame_superior)
-    boton_generar = tk.Button(frame_superior, text="Generar", command=obtener_df)
+    boton_generar = ttk.Button(frame_superior, text="Generar", command=obtener_df)
 
     paises_cb['values'] = [
         'Argentina',

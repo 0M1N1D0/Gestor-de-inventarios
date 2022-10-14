@@ -9,6 +9,7 @@ from .estatus_shopping.estatusShoppingMexico import actualizar_estatus_shopping_
 from .ventanaEstatusShopping import ventanaEstatusShopping
 from .ventanaEstatusDP import estatusDP
 from .ventanaCuponTodosGanan import cuponTodosGanan
+from.ventanaHistoricoyTipoKits import historico_tipo_kits
 
 
 def ventanaPrincipal():
@@ -19,6 +20,9 @@ def ventanaPrincipal():
 
     def importarCuponTodosGanan():
         importarArchivo('Cupon todos ganan paises')
+
+    def importarTipoeHistoriaKits():
+        importarArchivo('Histórico y tipo de kits')
 
 
     def importarArchivoArg():
@@ -166,6 +170,7 @@ def ventanaPrincipal():
     actualizar.add_cascade(label="Inventario general",menu=sub_inventario_general)
     actualizar.add_cascade(label="Estatus shopping", menu=sub_estatus_shopping)
     actualizar.add_cascade(label="Estatus DP", menu=sub_estatus_dp)
+    actualizar.add_cascade(label="Histórico y tipo de kits", command=importarTipoeHistoriaKits)
 
     consultar = tk.Menu(menubar, tearoff=0)
     consultar.add_command(label="Existencias SAP", command=ventanaExistencias)
@@ -174,6 +179,7 @@ def ventanaPrincipal():
     consultar.add_command(label="Cupón todos ganan", command=cuponTodosGanan)
     consultar.add_command(label="Inventario general", command=ventanaInventarioGeneral)
     consultar.add_command(label="Estatus DP", command=estatusDP)
+    consultar.add_command(label="Histórico y tipo de kits", command=historico_tipo_kits)
     menubar.add_cascade(label="Consultar", menu=consultar)
 
     root.config(menu=menubar)
